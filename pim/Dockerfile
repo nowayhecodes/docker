@@ -1,23 +1,11 @@
 FROM debian:jessie
 
 RUN \
-    echo "--> Adding webupd8 repository..."  && \
-    echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee /etc/apt/sources.list.d/webupd8team-java.list  && \
-    echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list  && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886  && \
-    apt-get update  && \
-    \
-    \
-    echo "--> Installing Java"  && \
-    echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections  && \
-    echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections  && \
-    DEBIAN_FRONTEND=noninteractive  apt-get install -y --force-yes oracle-java8-installer oracle-java8-set-default  && \
-    \
-    \
-    echo "--> Cleaning up..."  && \
-    rm -rf /var/cache/oracle-jdk8-installer  && \
-    apt-get clean  && \
-    rm -rf /var/lib/apt/lists/*
+    echo "--> Trying to install Java 8" && \
+    echo "--> Adding Jessie backports " && \
+    echo "deb http://http.debian.net/debian jessie-backports main" | tee /etc/apt/sources.list && \
+    apt-get update && apt-get install jessie-backports openjdk-8-jre && \
+    java -version
 
 RUN \
     echo "--> Adding Scala SBT repository..." && \
@@ -26,6 +14,6 @@ RUN \
     apt-get update && \
     apt-get install sbt
 
-RUN ./install.sh
+# RUN ./install.sh
 
 CMD ["java"]
