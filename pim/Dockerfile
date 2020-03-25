@@ -1,6 +1,8 @@
 FROM openjdk:8u242-buster
 
-RUN apt-get update && apt-get install -y sudo apt-utils
+RUN apt-get update
+RUN apt-get install -y sudo
+RUN apt-get install -y apt-utils
 
 RUN \
     echo "TRYING TO INSTALL SBT" && \
@@ -10,3 +12,7 @@ RUN \
 
 RUN sbt -version
 RUN java -version
+
+WORKDIR /the/workdir/path
+
+RUN ./install.sh

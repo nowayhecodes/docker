@@ -3,9 +3,12 @@ version: "3"
 services: 
   pim-producer:
     image: debian:jessie
+    ports: 
+    - "9002:9002"
     depends_on:
-      - kong
+    - kong
     build: 
       context: .
       dockerfile: Dockerfile
     container_name: pim-producer
+    restart: on-failure
