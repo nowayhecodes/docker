@@ -3,6 +3,7 @@ FROM openjdk:8u242-buster
 RUN apt-get update
 RUN apt-get install -y sudo
 RUN apt-get install -y apt-utils
+RUN apt-get install -y zip
 
 RUN \
     echo "TRYING TO INSTALL SBT" && \
@@ -13,6 +14,11 @@ RUN \
 RUN sbt -version
 RUN java -version
 
-WORKDIR /the/workdir/path
+WORKDIR /src
 
+COPY . /src
+
+RUN sbt clean && sbt dist
+RUN unzip ./target/universal/pim-producer-1.0-SNAPSHOT.zip
+RUN cd ./target/universal/pim-producer-1.0-SNAPSHOT
 RUN ./install.sh
