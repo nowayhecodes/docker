@@ -1,0 +1,5 @@
+FROM postgres
+
+ENV POSTGRES_PASSWORD gus
+
+WORKDIR /data

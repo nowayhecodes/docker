@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./:/data
+      - /var/postgres/data:/var/lib/postgresql/data
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: postgres_docker
