@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  mssql:
+    image: mssql    
+    ports:
+      - 1433:1433
+    volumes:
+      - ./:/data
+      - /var/mssql/data:/var/opt/mssql/data
+      - /var/mssql/log:/var/opt/mssql/log
+      - /var/mysql/secrets:/var/opt/mssql/secrets
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mssql_docker
