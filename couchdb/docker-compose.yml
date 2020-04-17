@@ -1,0 +1,17 @@
+version: '3'
+
+services: 
+  couch:
+    image: 'couch'
+    container_name: couchdb_docker
+    volumes: 
+      - ./data:/opt/couchdb/data
+    environment: 
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=gus
+    ports: 
+     - '5984:5984'
+    restart: always
+    build: 
+      context: .
+      dockerfile: Dockerfile
